@@ -1,6 +1,7 @@
 import { Bot, InputFile } from 'grammy';
 import { translate, speak } from 'google-translate-api-x';
 import pkg from '@romanize/korean';
+import http from 'http'; 
 import 'dotenv/config';
 
 const BOT_TOKEN = process.env.BOT_TOKEN || '';
@@ -40,6 +41,16 @@ bot.on('message:text', async (ctx) => {
     await ctx.replyWithVoice(new InputFile(result.audioBuffer), {
         caption: '🎙️ Произношение слова на корейском',
     });
+});
+
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Bot is running!\n');
+});
+
+const port = process.env.PORT || 3000;
+server.listen(port, () => {
+    console.log(`Простой HTTP-сервер запущен на порту ${port}`);
 });
 
 bot.start();
