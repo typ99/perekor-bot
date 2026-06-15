@@ -1,4 +1,4 @@
-import { Bot, InputFile } from "grammy";
+import { Bot, InputFile } from 'grammy';
 import { translate, speak } from 'google-translate-api-x';
 import pkg from '@romanize/korean';
 import 'dotenv/config';
@@ -16,21 +16,21 @@ const getTranslationAndAudio = async (text) => {
 
         return { koreanText, audioBuffer };
     } catch (error) {
-        console.error("Ошибка при переводе или получении аудио:", error);
+        console.error('Ошибка при переводе или получении аудио:', error);
 
         return null;
     }
 };
 
-bot.command("start", (ctx) => ctx.reply("🇷🇺🇰🇷 Привет! Я ПереКор: перевожу на корейский, даю транскрипцию и произношение. Попробуй: напиши «спасибо»."));
-bot.on("message:text", async (ctx) => {
+bot.command('start', (ctx) => ctx.reply('🇷🇺🇰🇷 Привет! Я ПереКор: перевожу на корейский, даю транскрипцию и произношение. Попробуй: напиши «спасибо».'));
+bot.on('message:text', async (ctx) => {
     const userText = ctx.message.text;
-    await ctx.reply(`🔍 Обрабатываю запрос: "${userText}"...`);
+    await ctx.reply(`🔍 Обрабатываю запрос: '${userText}'...`);
 
     const result = await getTranslationAndAudio(userText);
 
     if (!result) {
-        await ctx.reply("❌ Не удалось перевести текст. Попробуйте позже.");
+        await ctx.reply('❌ Не удалось перевести текст. Попробуйте позже.');
         return;
     }
 
@@ -38,7 +38,7 @@ bot.on("message:text", async (ctx) => {
 
     await ctx.reply(`✅ Перевод (хангыль): ${result.koreanText}\n📖 Транскрипция (латиницей): ${transcription}`);
     await ctx.replyWithVoice(new InputFile(result.audioBuffer), {
-        caption: "🎙️ Произношение слова на корейском",
+        caption: '🎙️ Произношение слова на корейском',
     });
 });
 
