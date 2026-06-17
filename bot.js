@@ -23,7 +23,7 @@ const getTranslationAndAudio = async (text) => {
     }
 };
 
-bot.command('start', (ctx) => ctx.reply('🇷🇺🇰🇷 Привет! Я ПереКор: перевожу на корейский, даю транскрипцию и произношение. Попробуй: напиши «спасибо».'));
+bot.command('start', async (ctx) => await ctx.reply('🇷🇺🇰🇷 Привет! Я ПереКор: перевожу на корейский, даю транскрипцию и произношение. Попробуй: напиши «спасибо».'));
 bot.on('message:text', async (ctx) => {
     const userText = ctx.message.text;
     await ctx.reply(`🔍 Обрабатываю запрос: '${userText}'...`);
